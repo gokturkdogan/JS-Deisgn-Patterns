@@ -1,2 +1,2 @@
-# JS-Deisgn-Patterns
+# JS-Design-Patterns
 YEG
