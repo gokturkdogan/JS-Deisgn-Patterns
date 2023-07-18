@@ -18,46 +18,6 @@
   align-items: center;
   width: 40%;
 }
-.header__navItem {
-  position: relative;
-}
-.header__navItem:hover .header__navDropDown {
-  display: block;
-}
-.header__navDropDown {
-  position: absolute;
-  width: 100%;
-  display: none;
-}
-.header__navDropContent {
-  display: flex;
-  flex-direction: column;
-  color: white;
-  background: #31363d;
-  margin-top: 20px;
-  border-radius: 10px;
-  width: 100%;
-}
-.header__navDropContent::after {
-  content: " ";
-  position: absolute;
-  top: 10px;
-  left: 10%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #31363d transparent;
-}
-.header__navDropItem {
-  padding: 10px 5px;
-  color: white;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  text-decoration: none;
-}
-.header__navDropItem:hover {
-  background-color: #010409;
-}
 .header__navLink {
   color: white;
   text-decoration: none;
