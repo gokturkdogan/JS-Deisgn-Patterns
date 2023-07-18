@@ -1,0 +1,49 @@
+.content {
+    max-width: 55%;
+    padding: 20px;
+
+    &__header {
+        h3 {
+            font-size: 30px;
+        }
+    }
+
+    &__transkript {
+        p {
+            color: #80848a;
+            font-weight: 600;
+        }
+    }
+
+    &__infoBox {
+        margin-top: 40px;
+        background-color: #2d2f33;
+        border-radius: 5px;
+        padding: 20px;
+        border: 1px solid #919191;
+    }
+
+    &__infoHeader {
+        h3 {
+            text-transform: uppercase;
+            font-size: 20px;
+            color: #39fd39;
+        }
+
+        .--weakness {
+            color: #fd3535;
+        }
+    }
+
+    &__infoBody {
+        margin-top: 20px;
+    }
+
+    &__infoItem {
+        margin-top: 10px;
+    }
+
+    &__infoNoneText {
+        font-size: 50px;
+    }
+}

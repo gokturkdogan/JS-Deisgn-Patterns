@@ -1,0 +1,20 @@
+@import 'components/header';
+@import 'components/home/sideBar';
+@import 'components/home/features';
+@import 'components/home/content';
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #010409;
+    font-family: 'Nunito', sans-serif;
+    color: white;
+}
+
+.banner {
+    display: flex;
+    justify-content: space-between;
+}
