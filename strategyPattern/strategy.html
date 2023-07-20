@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/b33c2144f5.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/scss/main.css">
+    <title>YEG POC</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header__logo">
+            <a href="/"><img class="header__logoImage" src="../assets/images/YEG.jpeg" alt="YEG"></a>
+        </div>
+        <div class="header__nav">
+            <div class="header__navItem">
+                <a class="header__navLink" href="strategyPattern/strategy.html">Strategy Pattern</a>
+            </div>
+            <div class="header__navItem">
+                <a class="header__navLink" href="">Chain of Responsibility</a>
+            </div>
+            <div class="header__navItem">
+                <a class="header__navLink" href="">Observe Pattern</a>
+            </div>
+        </div>
+    </div>
+    <div class="banner">
+        <div class="sideBar">
+            <div class="sideBar__header">
+                <h3 class="sideBar__strong">STRATEGY PATTERN GÜÇLÜ YANLARI</h3>
+            </div>
+            <div class="sideBar__body">
+                <div class="sideBar__item"><span class="sideBar__text">Esneklik ve Genişletilebilirlik</span>
+                    <div class="sideBar__itemDescription">Strategy deseni, algoritmayı değiştirmeyi veya yeni bir
+                        strateji
+                        eklemeyi kolaylaştırır. Yeni stratejiler oluşturmak için mevcut arayüze uymak yeterlidir. Bu
+                        sayede uygulama, gelecekte farklı senaryolara uyum sağlayabilir.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Tek Sorumluluk İlkesi</span>
+                    <div class="sideBar__itemDescription">Her strateji, kendi özel davranışını temsil eder ve farklı
+                        sınıflara bölünür. Bu sayede kod temiz ve bakımı kolay hale gelir.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Düzgün Kod Yapısı</span>
+                    <div class="sideBar__itemDescription">Strategy deseni, algoritma mantığını temsil eden sınıfın,
+                        algoritmaların uygulandığı sınıflardan bağımsız hale gelmesini sağlar. Bu sayede kod yapısı
+                        düzenli ve anlaşılır olur.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Tekrar Kullanılabilirlik</span>
+                    <div class="sideBar__itemDescription">Aynı stratejiler, farklı bağlamlarda ve uygulamalarda kolayca
+                        tekrar kullanılabilir. Bu, yazılım geliştirme sürecini hızlandırır ve kod tekrarlarını önler.
+                    </div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Soyutlama</span>
+                    <div class="sideBar__itemDescription">Strategy deseni, algoritmayı, kullanımı kolay ve anlaşılır bir
+                        arayüzle soyutlar. Bu sayede, kodun geri kalan kısmı stratejilerin iç yapısını bilmeden onları
+                        kullanabilir</div>
+                </div>
+            </div>
+            <div class="sideBar__footer">
+                <div class="sideBar__footerInfo">
+                    <h3>Genellikle Kullanıldığı Durumlar</h3>
+                    <i class="fa-sharp fa-solid fa-circle-info"></i>
+                </div>
+                <div class="sideBar__description">
+                    E-Ticaret ve Sosyal Paylaşım Projelerinde genellikle Ödeme ve Fatura İşlemleri, Sıralama ve Arama
+                    Algoritmaları, Paylaşım algoritmalarında kullanılır.
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content__header">
+                <h3>Strategy Pattern Nedir ?</h3>
+            </div>
+            <div class="content__transkript">
+                <p>Strategy Pattern, bir algoritmayı veya davranışı soyut bir arayüz altında gruplayarak, farklı
+                    stratejileri classlara ayırma yöntemidir. Bu sayede, algoritma veya davranışın çalışma zamanında
+                    değiştirilmesi ve yeni stratejilerin eklenmesi kolaylaşır. Strategy deseni, kodun düzenli ve
+                    sürdürülebilir olmasını sağlar ve esnek bir yapı sunar.</p>
+            </div>
+            <pre>
+                <code>
+                  <span class="comment">// Kredi Kartı ödemesi için sınıf</span>
+                  <span class="keyword">class</span> CreditCardPayment {
+                      <span class="comment">// Kredi kartıyla ödeme yapma işlemi</span>
+                      <span class="keyword">pay</span>(amount, cardInfo) {
+                          console.log(`Kredi Kartı ile ${amount} TL ödeme yapıldı.`);
+                          console.log("Kart Bilgileri:", cardInfo);
+                          <span class="keyword">return</span> `Kredi Kartı ile ${amount} TL ödeme yapıldı.\n\nKart Bilgileri:\n${JSON.stringify(cardInfo)}`;
+                      }
+                  }
+            
+                  <span class="comment">// Havale ödemesi için sınıf</span>
+                  <span class="keyword">class</span> BankTransferPayment {
+                      <span class="comment">// Havale ile ödeme yapma işlemi</span>
+                      <span class="keyword">pay</span>(amount, iban) {
+                          console.log(`Havale ile ${amount} TL ödeme yapıldı.`);
+                          console.log("IBAN:", iban);
+                          <span class="keyword">return</span> `Havale ile ${amount} TL ödeme yapıldı.\n\nIBAN: ${iban}`;
+                      }
+                  }
+            
+                  <span class="keyword">let</span> paymentStrategy;
+            
+                  <span class="comment">// Ödeme yöntemini belirleyen fonksiyon</span>
+                  <span class="keyword">function</span> setPaymentMethod(paymentMethod) {
+                      <span class="comment">// Ödeme yöntemi 'creditCard' seçilmişse kredi kartı formunu göster, paymentStrategy değişkenine CreditCardPayment sınıfını atanır</span>
+                      <span class="keyword">if</span> (paymentMethod === 'creditCard') {
+                          creditCardForm.style.display = "block";
+                          bankTransferForm.style.display = "none";
+                          paymentStrategy = <span class="keyword">new</span> CreditCardPayment();
+                      }
+                      <span class="comment">// Ödeme yöntemi 'bankTransfer' seçilmişse havale formunu göster, paymentStrategy değişkenine BankTransferPayment sınıfını atanır</span>
+                      <span class="keyword">else</span> <span class="keyword">if</span> (paymentMethod === 'bankTransfer') {
+                          creditCardForm.style.display = "none";
+                          bankTransferForm.style.display = "block";
+                          paymentStrategy = <span class="keyword">new</span> BankTransferPayment();
+                      }
+                  }
+            
+                  <span class="comment">// Giriş alanlarının doluluk kontrolünü yapar</span>
+                  <span class="keyword">function</span> validateInputs(inputs) {
+                      <span class="keyword">for</span> (<span class="keyword">const</span> input of inputs) {
+                          <span class="keyword">if</span> (!input.value) {
+                              alert("Lütfen tüm alanları doldurun.");
+                              <span class="keyword">return</span> <span class="keyword">false</span>;
+                          }
+                      }
+                      <span class="keyword">return</span> <span class="keyword">true</span>;
+                  }
+            
+                  <span class="comment">// Ödeme işlemini gerçekleştiren fonksiyon</span>
+                  <span class="keyword">function</span> makePayment(paymentMethod) {
+                      <span class="keyword">const</span> amount = document.getElementById("amount").value;
+                      <span class="comment">// Kredi kartı veya havale formuna göre giriş alanlarını seçer</span>
+                      <span class="keyword">const</span> inputs = (paymentMethod === 'creditCard') 
+                      ? 
+                      document.querySelectorAll("#creditCardForm input") 
+                      : 
+                      document.querySelectorAll("#bankTransferForm input");
+            
+                      <span class="comment">// Giriş alanları boşsa uyarı verir ve işlem yapmaz</span>
+                      <span class="keyword">if</span> (!validateInputs(inputs)) {
+                          <span class="keyword">return</span>;
+                      }
+            
+                      <span class="comment">// Seçilen ödeme yöntemine göre gerekli bilgileri alır</span>
+                      <span class="keyword">const</span> info = (paymentMethod === 'creditCard') ? {
+                          cardNumber: document.getElementById("cardNumber").value,
+                          expirationDate: document.getElementById("expirationDate").value,
+                          cvv: document.getElementById("cvv").value
+                      } : document.getElementById("iban").value;
+            
+                      <span class="comment">// paymentStrategy değişkeni üzerinden ödeme işlemini gerçekleştirir ve sonucu alert ile gösterir</span>
+                      <span class="keyword">const</span> result = paymentStrategy.pay(amount, info);
+                      alert(result);
+                      <span class="comment">// Formu temizler</span>
+                      clearForm(inputs);
+            
+                      <span class="comment">// Formları gizler</span>
+                      <span class="keyword">const</span> creditCardForm = document.getElementById("creditCardForm");
+                      <span class="keyword">const</span> bankTransferForm = document.getElementById("bankTransferForm");
+                      creditCardForm.style.display = "none";
+                      bankTransferForm.style.display = "none";
+                  }
+            
+                  <span class="comment">// Giriş alanlarını temizleyen fonksiyon</span>
+                  <span class="keyword">function</span> clearForm(inputs) {
+                      <span class="keyword">for</span> (<span class="keyword">const</span> input of inputs) {
+                          input.value = "";
+                      }
+                  }
+                </code>
+              </pre>
+            <div class="content__demo">
+                <div class="content__demoHeader">
+                    <h3>Demo</h3>
+                </div>
+                <div class="content__demoBody demo">
+                    <div class="demo__inputGroup">
+                        <label class="demo__label" for="amount">Ödeme Miktarı (TL):</label>
+                        <input class="demo__input" type="number" id="amount" required>
+                    </div>
+
+                    <button class="demo__button --credit" onclick="setPaymentMethod('creditCard')">Kredi Kartı ile
+                        Öde</button>
+                    <button class="demo__button --bankTransfer" onclick="setPaymentMethod('bankTransfer')">Havale ile
+                        Öde</button>
+
+                    <!-- Kredi Kartı Ödeme Formu -->
+                    <div class="demo__dropDown" id="creditCardForm" style="display: none;">
+                        <div class="demo__inputGroup">
+                            <label class="demo__label" for="cardNumber">Kredi Kartı Numarası:</label>
+                            <input class="demo__input" type="text" id="cardNumber" required>
+                        </div>
+                        <div class="demo__inputGroup">
+                            <label class="demo__label" for="expirationDate">Son Kullanma Tarihi:</label>
+                            <input class="demo__input" type="text" id="expirationDate" required>
+                        </div>
+                        <div class="demo__inputGroup">
+                            <label class="demo__label" for="cvv">CVV:</label>
+                            <input class="demo__input" type="text" id="cvv" required>
+                        </div>
+                        <button class="demo__button --pay" onclick="makePayment('creditCard')">Ödeme Yap</button>
+                    </div>
+
+                    <!-- Havale Ödeme Formu -->
+                    <div class="demo__dropDown" id="bankTransferForm" style="display: none;">
+                        <div class="demo__inputGroup">
+                            <label class="demo__label" for="iban">IBAN Numarası:</label>
+                            <input class="demo__input" type="text" id="iban" required>
+                        </div>
+                        <button class="demo__button --pay" onclick="makePayment('bankTransfer')">Ödeme Yap</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sideBar --rightBar">
+            <div class="sideBar__header">
+                <h3 class="sideBar__weak">STRATEGY PATTERN ZAYIF YANLARI</h3>
+            </div>
+            <div class="sideBar__body">
+                <div class="sideBar__item"><span class="sideBar__text">Kod Karmaşıklığı</span>
+                    <div class="sideBar__itemDescription">Strategy deseni, algoritmayı farklı sınıflara böldüğü için
+                        bazı durumlarda kod karmaşıklığını artırabilir. Basit işlemler için fazladan sınıfların
+                        oluşturulması gerekebilir ve bu durumda kod tabanı büyüyebilir.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Gereksiz Soyutlama</span>
+                    <div class="sideBar__itemDescription"> Çok basit ve az sayıda algoritmayı temsil eden projelerde
+                        Strategy deseni kullanmak gereksiz bir soyutlama olabilir. Bu tür durumlarda, daha basit ve
+                        doğrudan bir çözüm tercih edilebilir.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Zaman ve Kaynak Kullanımı</span>
+                    <div class="sideBar__itemDescription">Strategy desenini uygulamak, başlangıçta fazladan zaman ve
+                        kaynak kullanımını gerektirebilir. Küçük ve basit projelerde, bu ekstra zaman ve kaynak
+                        kullanımı önemsiz olabilir.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Bellek Tüketimi</span>
+                    <div class="sideBar__itemDescription">Farklı stratejilerin sınıflarının yaratılması, projenin bellek
+                        tüketimini artırabilir. Özellikle çok sayıda strateji kullanıldığında bu durum dikkate
+                        alınmalıdır.
+                    </div>
+                </div>
+            </div>
+            <div class="sideBar__footer">
+                <div class="sideBar__footerInfo">
+                    <h3>Kullanılmaması Gereken Durumlar</h3>
+                    <i class="fa-sharp fa-solid fa-circle-info"></i>
+                </div>
+                <div class="sideBar__description">
+                    Eğer projenizde algoritmaların değişimine veya farklı senaryolara uyum sağlama ihtimali düşükse,
+                    Strategy deseni gereksiz olabilir. Örneğin, basit bir veri işleme veya hesaplama projesi için
+                    Strategy deseni kullanmak, projeye gereksiz bir soyutlama getirebilir.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="strategy.js"></script>
+</body>
+
+</html>

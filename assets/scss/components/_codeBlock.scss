@@ -1,0 +1,21 @@
+pre {
+    width: 80%;
+    background-color: #0D1117;
+    padding: 10px;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 50px;
+  }
+
+  pre code span.keyword {
+    color: #B40B00;
+    font-weight: bold;
+  }
+
+  pre code span.comment {
+    color: #187e2e;
+  }
+
+  pre code span {
+    color: #000;
+  }

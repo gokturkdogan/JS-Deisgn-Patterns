@@ -1,7 +1,12 @@
+.--rightBar {
+    border-right: 0 !important;
+    border-left: 1px solid #30363D;
+}
+
 .sideBar {
     background-color: #0D1117;
     color: white;
-    height: 78vh;
+    height: 100vh;
     padding: 50px 30px;
     border-right: 1px solid #30363D;
 
@@ -12,6 +17,14 @@
         h3 {
             font-size: 16px;
         }
+    }
+
+    &__weak {
+        color: #fd3535;
+    }
+
+    &__strong {
+        color: #39fd39;
     }
 
     &__body {
@@ -26,6 +39,12 @@
         &:hover .sideBar__tooltip {
             visibility: visible;
         }
+    }
+
+    &__itemDescription {
+        margin-top: 10px;
+        max-width: 600px;
+        color: #80848a;
     }
 
     &__text {

@@ -1,7 +1,9 @@
 @import 'components/header';
-@import 'components/home/sideBar';
+@import 'components/sideBar';
 @import 'components/home/features';
 @import 'components/home/content';
+@import 'components/codeBlock';
+@import 'components/strategy/form';
 
 * {
     margin: 0;
@@ -12,6 +14,23 @@ body {
     background: #010409;
     font-family: 'Nunito', sans-serif;
     color: white;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2D2F33;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #919191;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .banner {

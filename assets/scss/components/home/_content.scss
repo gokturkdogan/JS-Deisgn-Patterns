@@ -1,6 +1,10 @@
 .content {
     max-width: 55%;
     padding: 20px;
+    overflow-y: scroll;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
 
     &__header {
         h3 {
@@ -45,5 +49,27 @@
 
     &__infoNoneText {
         font-size: 50px;
+    }
+
+    &__demo {
+        margin-top: 100px;
+    }
+
+    &__demoHeader {
+        border-bottom: 1px solid #919191;
+        padding: 20px 0;
+
+        h3 {
+            font-size: 30px;
+        }
+    }
+
+    &__demoBody {
+        width: 80%;
+        background-color: #0D1117;
+        padding: 50px;
+        border-radius: 5px;
+        margin: auto;
+        margin-top: 50px;
     }
 }
