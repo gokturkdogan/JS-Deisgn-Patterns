@@ -64,7 +64,7 @@ function makePayment(paymentMethod) {
         cvv: document.getElementById("cvv").value
     } : document.getElementById("iban").value;
 
-    // Seçilen strategy üzerinden ödemeyi yapar
+    // Seçilen strateji üzerinden ödemeyi yapar
     const result = paymentStrategy.pay(amount, info);
     alert(result);
     clearForm(inputs);

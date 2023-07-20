@@ -85,105 +85,94 @@
                     sürdürülebilir olmasını sağlar ve esnek bir yapı sunar.</p>
             </div>
             <pre>
-                <code>
-                    class CreditCardPayment {
-                        pay(amount, cardInfo) {
-                            console.log(`Kredi Kartı ile ${amount} TL ödeme yapıldı.`);
-                            console.log("Kart Bilgileri:");
-                            console.log("Kart Numarası:", cardInfo.cardNumber);
-                            console.log("Son Kullanma Tarihi:", cardInfo.expirationDate);
-                            console.log("CVV:", cardInfo.cvv);
-                            return `Kredi Kartı ile ${amount} TL ödeme yapıldı.\n\nKart Bilgileri:\nKart Numarası: ${cardInfo.cardNumber}\nSon Kullanma Tarihi: ${cardInfo.expirationDate}\nCVV: ${cardInfo.cvv}`;
-                        }
-                    }
-                    
-                    class BankTransferPayment {
-                        pay(amount, iban) {
-                            console.log(`Havale ile ${amount} TL ödeme yapıldı.`);
-                            console.log("IBAN:", iban);
-                            return `Havale ile ${amount} TL ödeme yapıldı.\n\nIBAN: ${iban}`;
-                        }
-                    }
-                    
-                    class PaymentContext {
-                        constructor(paymentStrategy) {
-                            this.paymentStrategy = paymentStrategy;
-                        }
-                    
-                        setPaymentStrategy(paymentStrategy) {
-                            this.paymentStrategy = paymentStrategy;
-                        }
-                    
-                        doPayment(amount, info) {
-                            return this.paymentStrategy.pay(amount, info);
-                        }
-                    }
-                    
-                    let paymentContext;
-                    
-                    function setPaymentMethod(paymentMethod) {
-                        const creditCardForm = document.getElementById("creditCardForm");
-                        const bankTransferForm = document.getElementById("bankTransferForm");
-                    
-                        if (paymentMethod === 'creditCard') {
-                            creditCardForm.style.display = "block";
-                            bankTransferForm.style.display = "none";
-                            paymentContext = new PaymentContext(new CreditCardPayment());
-                        } else if (paymentMethod === 'bankTransfer') {
-                            creditCardForm.style.display = "none";
-                            bankTransferForm.style.display = "block";
-                            paymentContext = new PaymentContext(new BankTransferPayment());
-                        }
-                    }
-                    
-                    function validateInputs(inputs) {
-                        for (const input of inputs) {
-                            if (!input.value) {
-                                alert("Lütfen tüm alanları doldurun.");
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                    
-                    function makePayment(paymentMethod) {
-                        const amount = document.getElementById("amount").value;
-                        const creditCardInputs = document.querySelectorAll("#creditCardForm input");
-                        const bankTransferInputs = document.querySelectorAll("#bankTransferForm input");
-                    
-                        if (paymentMethod === 'creditCard') {
-                            if (!validateInputs(creditCardInputs)) {
-                                return;
-                            }
-                            const cardNumber = document.getElementById("cardNumber").value;
-                            const expirationDate = document.getElementById("expirationDate").value;
-                            const cvv = document.getElementById("cvv").value;
-                            const result = paymentContext.doPayment(amount, { cardNumber, expirationDate, cvv });
-                            alert(result);
-                            clearForm(creditCardInputs);
-                        } else if (paymentMethod === 'bankTransfer') {
-                            if (!validateInputs(bankTransferInputs)) {
-                                return;
-                            }
-                            const iban = document.getElementById("iban").value;
-                            const result = paymentContext.doPayment(amount, iban);
-                            alert(result);
-                            clearForm(bankTransferInputs);
-                        }
-                    
-                        const creditCardForm = document.getElementById("creditCardForm");
-                        const bankTransferForm = document.getElementById("bankTransferForm");
-                        creditCardForm.style.display = "none";
-                        bankTransferForm.style.display = "none";
-                    }
-                    
-                    function clearForm(inputs) {
-                        for (const input of inputs) {
-                            input.value = "";
-                        }
-                    } 
-                </code>
-              </pre>
+<code>
+<span class="comment">// Kredi kartı sınıfı</span>
+<span class="keyword">class</span> <span class="strategy">CreditCardPayment</span> <span class="param">{</span>
+    <span class="function">pay</span><span class="condition">(</span><span class="value"><span class="value">amount</span></span>, <span class="value">cardInfo</span><span class="condition">)</span> <span class="condition">{</span>
+        <span class="value">console</span>.<span class="function">log</span><span class="keyword">(</span><span class="string">`Kredi Kartı ile</span> <span class="param">${</span><span class="value">amount</span><span class="param">}</span> <span class="string">TL ödeme yapıldı.`</span><span class="keyword">)</span>;
+        <span class="value">console</span>.<span class="function">log</span><span class="keyword">(</span><span class="string">"Kart Bilgileri:"</span>, <span class="value">cardInfo</span><span class="keyword">)</span>;
+        <span class="condition">return</span> <span class="string">`Kredi Kartı ile</span> <span class="keyword">${</span><span class="value">amount</span><span class="keyword">}</span> <span class="string">TL ödeme yapıldı.</span>
+        <span class="string">\n\nKart Bilgileri:\n</span><span class="keyword">${</span><span class="value">JSON</span>.<span class="function">stringify</span><span class="param">(</span><span class="value">cardInfo</span><span class="param">)</span><span class="keyword">}</span>`;
+    <span class="condition">}</span>
+<span class="param">}</span>
+
+<span class="comment">// Havale sınıfı</span>
+<span class="keyword">class</span> <span class="strategy">BankTransferPayment</span> <span class="param">{</span>
+    <span class="function">pay</span><span class="condition">(</span><span class="value">amount</span>, <span class="value">iban</span><span class="condition">)</span> <span class="condition">{</span>
+        <span class="value">console</span>.<span class="function">log</span><span class="keyword">(</span><span class="string">`Havale ile</span> <span class="param">${</span><span class="value">amount</span><span class="param">}</span> <span class="string">TL ödeme yapıldı.`</span><span class="keyword">)</span>;
+        <span class="value">console</span>.<span class="function">log</span><span class="keyword">(</span><span class="string">IBAN:`</span>, <span class="value">iban</span><span class="keyword">)</span>;
+        <span class="condition">return</span> <span class="string">`Havale ile</span> <span class="keyword">${</span><span class="value">amount</span><span class="keyword">}</span> <span class="string">TL ödeme yapıldı.\n\nIBAN:</span> <span class="keyword">${</span><span class="value">iban</span><span class="keyword">}</span><span class="string">`</span>;
+    <span class="condition">}</span>
+<span class="param">}</span>
+
+<span class="keyword">let</span> <span class="value">paymentStrategy</span>;
+
+<span class="comment">// Ödeme yöntemi belirleme</span>
+<span class="keyword">function</span> <span class="function">setPaymentMethod</span><span class="param">(</span><span class="value">paymentMethod</span><span class="param">)</span> <span class="param">{</span>
+    <span class="keyword">const</span> <span class="variable">creditCardForm</span> = <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">"creditCardForm"</span><span class="condition">)</span>;
+    <span class="keyword">const</span> <span class="variable">bankTransferForm</span> = <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">"bankTransferForm"</span><span class="condition">)</span>;
+
+    <span class="condition">if</span> <span class="condition">(</span><span class="value">paymentMethod</span> === <span class="string">'creditCard'</span><span class="condition">)</span> <span class="condition">{</span>
+        <span class="variable">creditCardForm</span>.<span class="variable">style</span>.<span class="value">display</span> = <span class="string">"block"</span>;
+        <span class="variable">bankTransferForm</span>.<span class="variable">style</span>.<span class="value">display</span> = <span class="string">"none"</span>;
+        <span class="value">paymentStrategy</span> = <span class="keyword">new</span> <span class="strategy">CreditCardPayment</span><span class="keyword">()</span>;
+    <span class="condition">}</span> <span class="condition">else</span> <span class="condition">if</span> <span class="condition">(</span></span><span class="value">paymentMethod</span> === <span class="string">'bankTransfer'</span><span class="condition">)</span> <span class="condition">{</span>
+        <span class="variable">creditCardForm</span>.<span class="variable">style</span>.<span class="value">display</span> = <span class="string">"none"</span>;
+        <span class="variable">bankTransferForm</span>.<span class="variable">style</span>.<span class="value">display</span> = <span class="string">"block"</span>;
+        <span class="value">paymentStrategy</span> = <span class="keyword">new</span> <span class="strategy">BankTransferPayment</span><span class="keyword">()</span>;
+    <span class="condition">}</span>
+<span class="param">}</span>
+
+<span class="comment">// Inputların doluluk kontrolü</span>
+<span class="keyword">function</span> <span class="function">validateInputs</span><span class="keyword">(</span></span><span class="value">inputs</span><span class="keyword">)</span> <span class="param">{</span>
+    <span class="condition">for</span> <span class="condition">(</span><span class="keyword">const</span> <span class="variable">input</span> <span class="keyword">of</span> <span class="value">inputs</span><span class="condition">)</span> <span class="condition">{</span>
+        <span class="condition">if</span> <span class="condition">(</span>!<span class="variable">input</span>.<span class="value">value</span><span class="condition">)</span> <span class="condition">{</span>
+            <span class="function">alert</span><span class="param">(</span><span class="string">"Lütfen tüm alanları doldurun."</span><span class="param">)</span>;
+            <span class="condition">return</span> <span class="keyword">false</span>;
+        <span class="condition">}</span>
+    <span class="condition">}</span>
+    <span class="condition">return</span> <span class="keyword">true</span>;
+<span class="param">}</span>
+
+<span class="comment">// Ödeme işlemini gerçekleştiren method</span>
+<span class="keyword">function</span> <span class="function">makePayment</span><span class="param">(</span><span class="value">paymentMethod</span><span class="param">)</span> <span class="param">{</span>
+    <span class="keyword">const</span> <span class="value">amount</span> = <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">"amount"</span><span class="condition">)</span>.<span class="value">value</span>;
+    <span class="comment">// Seçilen stratejiye göre inputları seçer</span>
+    <span class="keyword">const</span> <span class="value">inputs</span> = <span class="condition">(</span><span class="value">paymentMethod</span> === <span class="string">'creditCard'</span><span class="condition">)</span> ?
+    <span class="value">document</span>.<span class="function">querySelectorAll</span><span class="condition">(</span><span class="string">"#creditCardForm input"</span><span class="condition">)</span> :
+    <span class="value">document</span>.<span class="function">querySelectorAll</span><span class="condition">(</span><span class="string">"#bankTransferForm input"</span><span class="condition">)</span>;
+
+    <span class="condition">if</span> <span class="condition">(</span>!<span class="function">validateInputs</span><span class="keyword">(</span><span class="variable">inputs</span><span class="keyword">)</span><span class="condition">)</span> <span class="condition">{</span>
+        <span class="condition">return</span>;
+    <span class="condition">}</span>
+
+    <span class="comment">// Seçilen stratejiye göre gerekli bilgileri alır</span>
+    <span class="keyword">const</span> <span class="value">info</span> = <span class="condition">(</span><span class="value">paymentMethod</span> === <span class="string">'creditCard'</span><span class="condition">)</span> ? <span class="condition">{</span>
+        <span class="value">cardNumber</span>: <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">"cardNumber"</span><span class="condition">)</span>.<span class="value">value</span>,
+        <span class="value">expirationDate</span>: <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">"expirationDate"</span><span class="condition">)</span>.<span class="value">value</span>,
+        <span class="value">cvv</span>: <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">"cvv"</span><span class="condition">)</span>.<span class="value">value</span>
+    <span class="condition">}</span> : <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">"iban"</span><span class="condition">)</span>.<span class="value">value</span>;
+
+    <span class="comment">// Seçilen strateji üzerinden ödemeyi yapar</span>
+    <span class="keyword">const</span> <span class="variable">result</span> = <span class="value">paymentStrategy</span>.<span class="function">pay</span><span class="condition">(</span><span class="variable">amount</span>, <span class="variable">info</span><span class="condition">)</span>;
+    <span class="function">alert</span><span class="condition">(</span><span class="variable">result</span><span class="condition">)</span>;
+    <span class="function">clearForm</span><span class="condition">(</span><span class="variable">inputs</span><span class="condition">)</span>;
+
+    <span class="comment">// Formları gizler</span>
+    <span class="keyword">const</span> <span class="variable">rescreditCardFormult</span> = <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span></span><span class="string">"creditCardForm"</span><span class="condition">)</span>;
+    <span class="keyword">const</span> <span class="variable">bankTransferForm</span> = <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span></span><span class="string">"bankTransferForm"</span><span class="condition">)</span>;
+    <span class="variable">rescreditCardFormult</span>.<span class="variable">style</span>.<span class="value">display</span> = <span class="string">"none"</span>;
+    <span class="variable">bankTransferForm</span>.<span class="variable">style</span>.<span class="value">display</span> = <span class="string">"none"</span>;
+<span class="param">}</span>
+
+<span class="comment">// Giriş alanlarını temizleyen method</span>
+<span class="keyword">function</span> <span class="function">clearForm</span><span class="param">(</span><span class="value">inputs</span><span class="param">)</span> <span class="param">{</span>
+    <span class="condition">for</span> <span class="condition">(</span><span class="keyword">const</span> <span class="variable">input</span> <span class="keyword">of</span> <span class="value">inputs</span><span class="condition">)</span> <span class="condition">{</span>
+        <span class="variable">input</span>.<span class="value">inputs</span> = <span class="string">""</span>;
+    <span class="condition">}</span>
+<span class="param">}</span>
+</code>
+</pre>
             <div class="content__demo">
                 <div class="content__demoHeader">
                     <h3>Demo</h3>

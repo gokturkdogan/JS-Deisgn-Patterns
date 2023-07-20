@@ -214,19 +214,54 @@ pre {
   border-radius: 5px;
   margin: auto;
   margin-top: 50px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  color: #F0F0F0;
 }
 
 pre code span.keyword {
-  color: #B40B00;
+  color: #0057a8;
   font-weight: bold;
 }
 
+pre code span.variable {
+  color: #0084ff;
+  font-weight: bold;
+}
+
+pre code span.value {
+  color: #66b5ff;
+}
+
 pre code span.comment {
-  color: #187e2e;
+  color: #1dac3c;
 }
 
 pre code span {
-  color: #000;
+  color: #F0F0F0;
+}
+
+pre code span.function {
+  color: #ffff9e;
+}
+
+pre code span.param {
+  color: #ffff00;
+}
+
+pre code span.condition {
+  color: #fd68d8;
+}
+
+pre code span.strategy {
+  color: #07995c;
+  font-weight: bold;
+}
+
+pre code span.string {
+  color: #dd9860;
 }
 
 .demo__inputGroup {
