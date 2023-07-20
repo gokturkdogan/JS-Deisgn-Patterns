@@ -1,7 +1,10 @@
 .demo {
+
+
     &__inputGroup {
         display: flex;
         justify-content: space-between;
+        margin-top: 40px;
     }
 
     &__label {
@@ -65,4 +68,11 @@
             margin-top: 20px;
         }
     }
+}
+
+.--tax {
+    margin: 20px 50px
+}
+.--taxForm {
+    margin-top: 50px;
 }

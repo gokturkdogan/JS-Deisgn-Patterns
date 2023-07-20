@@ -189,7 +189,7 @@
   font-size: 50px;
 }
 .content__demo {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 .content__demoHeader {
   border-bottom: 1px solid #919191;
@@ -260,6 +260,10 @@ pre code span.strategy {
   font-weight: bold;
 }
 
+pre code span.int {
+  color: #67b896;
+}
+
 pre code span.string {
   color: #dd9860;
 }
@@ -267,6 +271,7 @@ pre code span.string {
 .demo__inputGroup {
   display: flex;
   justify-content: space-between;
+  margin-top: 40px;
 }
 .demo__label {
   color: #949494;
@@ -319,6 +324,14 @@ pre code span.string {
   margin-top: 20px;
 }
 
+.--tax {
+  margin: 20px 50px;
+}
+
+.--taxForm {
+  margin-top: 50px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -350,4 +363,8 @@ body {
 .banner {
   display: flex;
   justify-content: space-between;
+}
+
+hr {
+  margin: 100px 0;
 }/*# sourceMappingURL=main.css.map */

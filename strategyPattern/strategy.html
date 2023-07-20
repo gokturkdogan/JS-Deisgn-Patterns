@@ -172,12 +172,12 @@
     <span class="condition">}</span>
 <span class="param">}</span>
 </code>
-</pre>
+            </pre>
             <div class="content__demo">
-                <div class="content__demoHeader">
-                    <h3>Demo</h3>
-                </div>
                 <div class="content__demoBody demo">
+                    <div class="content__demoHeader">
+                        <h3>Demo</h3>
+                    </div>
                     <div class="demo__inputGroup">
                         <label class="demo__label" for="amount">Ödeme Miktarı (TL):</label>
                         <input class="demo__input" type="number" id="amount" required>
@@ -213,6 +213,77 @@
                         </div>
                         <button class="demo__button --pay" onclick="makePayment('bankTransfer')">Ödeme Yap</button>
                     </div>
+                </div>
+                <hr>
+                <pre>
+ <code>
+    <span class="keyword">class</span> <span class="strategy">KdvStrategy</span> <span class="param">{</span>
+        <span class="function">calculate</span><span class="condition">(</span><span class="value">amount</span><span class="condition">)</span> <span class="condition">{</span>
+            <span class="keyword">const</span> <span class="variable">kdvRate</span> = <span class="int">0.18</span>; <span class="comment">// %18 KDV oranı</span>
+            <span class="keyword">const</span> <span class="variable">kdvAmount</span> = <span class="value">amount</span> * <span class="variable">kdvRate</span>;
+            <span class="condition">return</span> <span class="variable">kdvAmount</span>;
+        <span class="condition">}</span>
+    <span class="param">}</span>
+    
+    <span class="keyword">class</span> <span class="strategy">IncomeTaxStrategy</span> <span class="param">{</span>
+        <span class="function">calculate</span><span class="condition">(</span><span class="value">amount</span><span class="condition">)</span> <span class="condition">{</span>
+            <span class="keyword">const</span> <span class="variable">taxRate</span> = <span class="int">0.25</span>; <span class="comment">// %25 Gelir Vergisi oranı</span>
+            <span class="keyword">const</span> <span class="variable">taxAmount</span> = <span class="value">amount</span> * <span class="variable">taxRate</span>;
+            <span class="condition">return</span> <span class="variable">taxAmount</span>;
+        <span class="condition">}</span>
+    <span class="param">}</span>
+    
+    <span class="keyword">class</span> <span class="strategy">TaxCalculator</span> <span class="param">{</span>
+        <span class="keyword">constructor</span><span class="condition">(</span><span class="condition">)</span> <span class="condition">{</span>
+            <span class="keyword">this</span>.<span class="value">strategies</span> = <span class="keyword">{</span>
+                <span class="value">kdv</span>: <span class="keyword">new</span> <span class="strategy">KdvStrategy</span><span class="param">()</span>,
+                <span class="value">incomeTax</span>: <span class="keyword">new</span> <span class="strategy">IncomeTaxStrategy</span><span class="param">()</span>,
+            <span class="keyword">}</span>;
+            <span class="keyword">this</span>.<span class="value">strategy</span> = <span class="keyword">null</span>;
+        <span class="condition">}</span>
+    
+        <span class="function">setStrategy</span><span class="condition">(</span><span class="value">strategy</span><span class="condition">)</span> <span class="condition">{</span>
+            <span class="keyword">this</span>.<span class="value">strategy</span> = <span class="keyword">this</span>.<span class="value">strategies</span><span class="keyword">[</span><span class="value">strategy</span><span class="keyword">]</span>;
+        <span class="condition">}</span>
+    
+        <span class="function">calculateManager</span><span class="condition">(</span><span class="value">amount</span><span class="condition">)</span> <span class="condition">{</span>
+            <span class="keyword">const</span> <span class="variable">taxAmount</span> = <span class="keyword">this</span>.<span class="value">strategy</span>. <span class="function">calculate</span><span class="keyword">(</span><span class="value">amount</span><span class="keyword">)</span>;
+            <span class="value">console</span>.<span class="function">log</span><span class="keyword">(</span><span class="string">`Hesaplanan Vergi Miktarı:</span> <span class="param">${</span><span class="variable">taxAmount</span>.<span class="function">toFixed</span><span class="keyword">(</span><span class="int">2</span><span class="keyword">)</span><span class="param">}</span> <span class="string">TL`:</span><span class="keyword">)</span>;
+            <span class="condition">return</span> <span class="variable">taxAmount</span>.<span class="function">toFixed</span><span class="keyword">(</span><span class="int">2</span><span class="keyword">)</span></span>;
+        <span class="condition">}</span>
+    <span class="param">}</span>
+    
+    <span class="keyword">function</span> <span class="function">calculateTax</span><span class="param">(</span><span class="value">strategy</span><span class="param">)</span> <span class="param">{</span>
+        <span class="keyword">const</span> <span class="variable">amountInput</span> = <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">`</span><span class="keyword">${</span><span class="value">strategy</span><span class="keyword">}</span><span class="string">Amount`</span><span class="condition">)</span>;
+        <span class="keyword">const</span> <span class="variable">amount</span> = <span class="variable">amountInput</span>.<span class="value">value</span>;
+        <span class="keyword">const</span> <span class="variable">taxCalculator</span> = <span class="keyword">new</span> <span class="strategy">TaxCalculator</span><span class="condition">(</span><span class="condition">)</span>;
+        <span class="variable">taxCalculator</span>.<span class="function">setStrategy</span><span class="condition">(</span><span class="value">strategy</span><span class="condition">)</span>;
+        <span class="keyword">const</span> <span class="variable">result</span> = <span class="variable">taxCalculator</span>.<span class="function">calculateManager</span><span class="condition">(</span><span class="variable">amount</span><span class="condition">)</span>;
+        <span class="value">document</span>.<span class="function">getElementById</span><span class="condition">(</span><span class="string">`</span><span class="keyword">${</span><span class="value">strategy</span><span class="keyword">}</span><span class="string">Result`</span><span class="condition">)</span>.<span class="value">innerText</span> = <span class="string">`Hesaplanan Vergi Miktarı:</span> <span class="condition">${</span><span class="variable">result</span><span class="condition">}</span> <span class="string">TL`</span>;
+    <span class="param">}</span>
+ </code>
+</pre>
+                <div class="content__demoBody demo">
+                    <div class="content__demoHeader">
+                        <h3>Demo</h3>
+                    </div>
+                    <form class="--taxForm" id="kdvForm">
+                        <h3>KDV (Katma Değer Vergisi)</h3>
+                        <label class="demo__label" for="kdvAmount">Miktar (TL):</label>
+                        <input class="demo__input --tax" type="number" id="kdvAmount" />
+                        <button class="demo__button  --bankTransfer" type="button"
+                            onclick="calculateTax('kdv')">Hesapla</button>
+                        <div id="kdvResult"></div>
+                    </form>
+
+                    <form class="--taxForm" id="incomeTaxForm">
+                        <h3>Gelir Vergisi</h3>
+                        <label class="demo__label" for="incomeTaxAmount">Miktar (TL):</label>
+                        <input class="demo__input --tax" type="number" id="incomeTaxAmount" />
+                        <button class="demo__button --bankTransfer" type="button"
+                            onclick="calculateTax('incomeTax')">Hesapla</button>
+                        <div id="incomeTaxResult"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -257,6 +328,7 @@
         </div>
     </div>
     <script src="strategy.js"></script>
+    <script src="taxCalculator.js"></script>
 </body>
 
 </html>
