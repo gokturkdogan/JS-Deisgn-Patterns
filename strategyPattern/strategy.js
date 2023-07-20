@@ -1,14 +1,13 @@
+// Kredi kartı sınıfı
 class CreditCardPayment {
     pay(amount, cardInfo) {
         console.log(`Kredi Kartı ile ${amount} TL ödeme yapıldı.`);
-        console.log("Kart Bilgileri:");
-        console.log("Kart Numarası:", cardInfo.cardNumber);
-        console.log("Son Kullanma Tarihi:", cardInfo.expirationDate);
-        console.log("CVV:", cardInfo.cvv);
-        return `Kredi Kartı ile ${amount} TL ödeme yapıldı.\n\nKart Bilgileri:\nKart Numarası: ${cardInfo.cardNumber}\nSon Kullanma Tarihi: ${cardInfo.expirationDate}\nCVV: ${cardInfo.cvv}`;
+        console.log("Kart Bilgileri:", cardInfo);
+        return `Kredi Kartı ile ${amount} TL ödeme yapıldı.\n\nKart Bilgileri:\n${JSON.stringify(cardInfo)}`;
     }
 }
 
+// Havale sınıfı
 class BankTransferPayment {
     pay(amount, iban) {
         console.log(`Havale ile ${amount} TL ödeme yapıldı.`);
@@ -17,22 +16,9 @@ class BankTransferPayment {
     }
 }
 
-class PaymentContext {
-    constructor(paymentStrategy) {
-        this.paymentStrategy = paymentStrategy;
-    }
+let paymentStrategy;
 
-    setPaymentStrategy(paymentStrategy) {
-        this.paymentStrategy = paymentStrategy;
-    }
-
-    doPayment(amount, info) {
-        return this.paymentStrategy.pay(amount, info);
-    }
-}
-
-let paymentContext;
-
+// Ödeme yöntemi belirleme
 function setPaymentMethod(paymentMethod) {
     const creditCardForm = document.getElementById("creditCardForm");
     const bankTransferForm = document.getElementById("bankTransferForm");
@@ -40,14 +26,15 @@ function setPaymentMethod(paymentMethod) {
     if (paymentMethod === 'creditCard') {
         creditCardForm.style.display = "block";
         bankTransferForm.style.display = "none";
-        paymentContext = new PaymentContext(new CreditCardPayment());
+        paymentStrategy = new CreditCardPayment();
     } else if (paymentMethod === 'bankTransfer') {
         creditCardForm.style.display = "none";
         bankTransferForm.style.display = "block";
-        paymentContext = new PaymentContext(new BankTransferPayment());
+        paymentStrategy = new BankTransferPayment();
     }
 }
 
+// Inputların doluluk kontrolü
 function validateInputs(inputs) {
     for (const input of inputs) {
         if (!input.value) {
@@ -58,39 +45,40 @@ function validateInputs(inputs) {
     return true;
 }
 
+// Ödeme işlemini gerçekleştiren method
 function makePayment(paymentMethod) {
     const amount = document.getElementById("amount").value;
-    const creditCardInputs = document.querySelectorAll("#creditCardForm input");
-    const bankTransferInputs = document.querySelectorAll("#bankTransferForm input");
+    // Seçilen stratejiye göre inputları seçer
+    const inputs = (paymentMethod === 'creditCard') ?
+        document.querySelectorAll("#creditCardForm input") :
+        document.querySelectorAll("#bankTransferForm input");
 
-    if (paymentMethod === 'creditCard') {
-        if (!validateInputs(creditCardInputs)) {
-            return;
-        }
-        const cardNumber = document.getElementById("cardNumber").value;
-        const expirationDate = document.getElementById("expirationDate").value;
-        const cvv = document.getElementById("cvv").value;
-        const result = paymentContext.doPayment(amount, { cardNumber, expirationDate, cvv });
-        alert(result);
-        clearForm(creditCardInputs);
-    } else if (paymentMethod === 'bankTransfer') {
-        if (!validateInputs(bankTransferInputs)) {
-            return;
-        }
-        const iban = document.getElementById("iban").value;
-        const result = paymentContext.doPayment(amount, iban);
-        alert(result);
-        clearForm(bankTransferInputs);
+    if (!validateInputs(inputs)) {
+        return;
     }
 
+    // Seçilen stratejiye göre gerekli bilgileri alır
+    const info = (paymentMethod === 'creditCard') ? {
+        cardNumber: document.getElementById("cardNumber").value,
+        expirationDate: document.getElementById("expirationDate").value,
+        cvv: document.getElementById("cvv").value
+    } : document.getElementById("iban").value;
+
+    // Seçilen strategy üzerinden ödemeyi yapar
+    const result = paymentStrategy.pay(amount, info);
+    alert(result);
+    clearForm(inputs);
+
+    // Formları gizler
     const creditCardForm = document.getElementById("creditCardForm");
     const bankTransferForm = document.getElementById("bankTransferForm");
     creditCardForm.style.display = "none";
     bankTransferForm.style.display = "none";
 }
 
+// Giriş alanlarını temizleyen method
 function clearForm(inputs) {
     for (const input of inputs) {
         input.value = "";
     }
-} 
+}
