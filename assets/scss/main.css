@@ -267,6 +267,12 @@ pre code span.string {
   color: #dd9860;
 }
 
+.demo__form {
+  padding: 50px;
+  background-color: #0D1117;
+  border-radius: 15px;
+  margin-top: 30px;
+}
 .demo__inputGroup {
   display: flex;
   justify-content: space-between;

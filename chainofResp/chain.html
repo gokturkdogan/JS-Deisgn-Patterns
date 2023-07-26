@@ -81,18 +81,131 @@
                     bir işleyicinin, isteği işleyip sonlandırıp sonlandıramayacağını belirleyerek bu işlemi işlemesini
                     sağlar.</p>
             </div>
-            <form id="registrationForm">
-                <label for="username">Username:</label>
-                <input type="text" id="username" required>
-                <br>
-                <label for="email">Email:</label>
-                <input type="email" id="email" required>
-                <br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" required>
-                <br>
-                <button type="button" onclick="validateForm()">Register</button>
-            </form>
+              <pre><code><span class="comment">// Kullanıcı adını validasyonu</span>
+<span class="function">function</span> <span class="function">validateUsername</span>(<span class="variable">username</span>) {
+    <span class="keyword">const</span> <span class="variable">usernameRegex</span> = /^(?=.*\d)[a-zA-Z0-9]{4,}$/;
+    <span class="keyword">return</span> <span class="variable">usernameRegex</span>.<span class="function">test</span>(<span class="variable">username</span>);
+}
+
+<span class="comment">// E-posta validasyonu</span>
+<span class="function">function</span> <span class="function">validateEmail</span>(<span class="variable">email</span>) {
+    <span class="keyword">const</span> <span class="variable">emailRegex</span> = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    <span class="keyword">return</span> <span class="variable">emailRegex</span>.<span class="function">test</span>(<span class="variable">email</span>);
+}
+
+<span class="comment">// Şifrenin validasyonu</span>
+<span class="function">function</span> <span class="function">validatePassword</span>(<span class="variable">password</span>) {
+    <span class="keyword">const</span> <span class="variable">passwordRegex</span> = /^(?=.*\d)[a-zA-Z0-9]{8,}$/;
+    <span class="keyword">return</span> <span class="variable">passwordRegex</span>.<span class="function">test</span>(<span class="variable">password</span>);
+}
+
+<span class="comment">// Doğrulayıcı sınıf</span>
+<span class="keyword">class</span> <span class="strategy">Validator</span> {
+    <span class="function">constructor</span>() {
+        <span class="keyword">this</span>.<span class="variable">successor</span> = <span class="keyword">null</span>;
+    }
+
+    <span class="comment">// Sıradaki halkayı setleyen method</span>
+    <span class="function">setSuccessor</span>(<span class="variable">successor</span>) {
+        <span class="keyword">this</span>.<span class="variable">successor</span> = <span class="variable">successor</span>;
+    }
+
+    <span class="comment">// Sıradaki halkaya geçişi yapan method</span>
+    <span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>) {
+        <span class="keyword">if</span> (<span class="keyword">this</span>.<span class="variable">successor</span>) {
+            <span class="keyword">return</span> <span class="keyword">this</span>.<span class="variable">successor</span>.<span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>);
+        }
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+}
+
+<span class="comment">// Kullanıcı adı sınıfı</span>
+<span class="keyword">class</span> <span class="strategy">UsernameValidator</span> <span class="param">extends</span> <span class="strategy">Validator</span> {
+    <span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>) {
+        <span class="keyword">if</span> (<span class="variable">type</span> === <span class="string">"username"</span>) {
+            <span class="keyword">if</span> (!<span class="function">validateUsername</span>(<span class="variable">data</span>)) {
+                <span class="function">alert</span>(<span class="string">"Kullanıcı adı en az 4 karakter olmalı ve en az bir rakam içermelidir."</span>);
+                <span class="keyword">return</span> <span class="keyword">false</span>;
+            }
+        }
+        <span class="keyword">return</span> <span class="function">super</span>.<span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>);
+    }
+}
+
+<span class="comment">// E-posta sınıfı</span>
+<span class="keyword">class</span> <span class="strategy">EmailValidator</span> <span class="param">extends</span> <span class="strategy">Validator</span> {
+    <span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>) {
+        <span class="keyword">if</span> (<span class="variable">type</span> === <span class="string">"email"</span>) {
+            <span class="keyword">if</span> (!<span class="function">validateEmail</span>(<span class="variable">data</span>)) {
+                <span class="function">alert</span>(<span class="string">"Lütfen geçerli bir e-posta adresi giriniz."</span>);
+                <span class="keyword">return</span> <span class="keyword">false</span>;
+            }
+        }
+        <span class="keyword">return</span> <span class="function">super</span>.<span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>);
+    }
+}
+
+<span class="comment">// Şifre sınıfı</span>
+<span class="keyword">class</span> <span class="strategy">PasswordValidator</span> <span class="param">extends</span> <span class="strategy">Validator</span> {
+    <span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>) {
+        <span class="keyword">if</span> (<span class="variable">type</span> === <span class="string">"password"</span>) {
+            <span class="keyword">if</span> (!<span class="function">validatePassword</span>(<span class="variable">data</span>)) {
+                <span class="function">alert</span>(<span class="string">"Şifre en az 8 karakter olmalı ve en az bir rakam içermelidir."</span>);
+                <span class="keyword">return</span> <span class="keyword">false</span>;
+            }
+        }
+        <span class="keyword">return</span> <span class="function">super</span>.<span class="function">handleRequest</span>(<span class="variable">data</span>, <span class="variable">type</span>);
+    }
+}
+
+<span class="comment">// Formu valide eden fonksiyon.</span>
+<span class="function">function</span> <span class="function">validateForm</span>() {
+    <span class="comment">// Inputlardan değerler alınıp constantlara atılıyor</span>
+    <span class="keyword">const</span> <span class="variable">username</span> = <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">"username"</span>).<span class="variable">value</span>;
+    <span class="keyword">const</span> <span class="variable">email</span> = <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">"email"</span>).<span class="variable">value</span>;
+    <span class="keyword">const</span> <span class="variable">password</span> = <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">"password"</span>).<span class="variable">value</span>;
+
+    <span class="comment">// Constantlara sınıflar atanıyor</span>
+    <span class="keyword">const</span> <span class="variable">usernameValidator</span> = <span class="keyword">new</span> <span class="strategy">UsernameValidator</span>();
+    <span class="keyword">const</span> <span class="variable">emailValidator</span> = <span class="keyword">new</span> <span class="strategy">EmailValidator</span>();
+    <span class="keyword">const</span> <span class="variable">passwordValidator</span> = <span class="keyword">new</span> <span class="strategy">PasswordValidator</span>();
+
+    <span class="comment">// Zincirin halkaları birbirine bağlanıyor</span>
+    <span class="variable">usernameValidator</span>.<span class="function">setSuccessor</span>(<span class="variable">emailValidator</span>);
+    <span class="variable">emailValidator</span>.<span class="function">setSuccessor</span>(<span class="variable">passwordValidator</span>);
+
+    <span class="comment">// Bir constanta ilgili halkalardan dönen değerler atanıyor</span>
+    <span class="keyword">const</span> <span class="variable">isFormValid</span> = <span class="variable">usernameValidator</span>.<span class="function">handleRequest</span>(<span class="variable">username</span>, <span class="string">"username"</span>) &&
+        <span class="variable">emailValidator</span>.<span class="function">handleRequest</span>(<span class="variable">email</span>, <span class="string">"email"</span>) &&
+        <span class="variable">passwordValidator</span>.<span class="function">handleRequest</span>(<span class="variable">password</span>, <span class="string">"password"</span>);
+
+    <span class="comment">// Zincir başarı ile tamamlanırsa alertte girilen bilgiler basılıyor</span>
+    <span class="keyword">if</span> (<span class="variable">isFormValid</span>) {
+        <span class="function">alert</span>(<span class="string">"Kayıt başarılı!\n\nKullanıcı adı: "</span> + <span class="variable">username</span> + <span class="string">"\nE-posta: "</span> + <span class="variable">email</span> + <span class="string">"\nŞifre: "</span> + <span class="variable">password</span>);
+        <span class="comment">//Formu resetliyor</span>
+        <span class="function">document</span>.<span class="function">getElementById</span>(<span class="string">"registrationForm"</span>).<span class="function">reset</span>();
+    }
+}</code></pre>
+            <div class="demo">
+                <div class="content__demoHeader">
+                    <h3>Demo</h3>
+                </div>
+                <form class="demo__form" id="registrationForm">
+                    <div class="demo__inputGroup">
+                        <label class="demo__label" for="username">Username:</label>
+                        <input class="demo__input" type="text" id="username" required>
+                    </div>
+                    <div class="demo__inputGroup">
+                        <label class="demo__label" for="email">Email:</label>
+                        <input class="demo__input" type="email" id="email" required>
+                    </div>
+                    <div class="demo__inputGroup">
+                        <label class="demo__label" for="password">Password:</label>
+                        <input class="demo__input" type="password" id="password" required>
+                    </div>
+                    <button class="demo__button --credit" onclick="validateForm()">Register</button>
+                </form>
+            </div>
         </div>
         <div class="sideBar --rightBar">
             <div class="sideBar__header">

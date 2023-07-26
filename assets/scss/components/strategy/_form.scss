@@ -1,4 +1,11 @@
 .demo {
+    &__form {
+        padding: 50px;
+        background-color: #0D1117;
+        border-radius: 15px;
+        margin-top: 30px;
+    }
+
     &__inputGroup {
         display: flex;
         justify-content: space-between;
@@ -71,6 +78,7 @@
 .--tax {
     margin: 20px 50px
 }
+
 .--taxForm {
     margin-top: 50px;
 }
