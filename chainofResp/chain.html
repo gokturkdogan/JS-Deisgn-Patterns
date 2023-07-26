@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/b33c2144f5.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/scss/main.css">
+    <title>YEG POC</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header__logo">
+            <a href="/"><img class="header__logoImage" src="../assets/images/YEG.jpeg" alt="YEG"></a>
+        </div>
+        <div class="header__nav">
+            <div class="header__navItem">
+                <a class="header__navLink" href="../strategyPattern/strategy.html">Strategy Pattern</a>
+            </div>
+            <div class="header__navItem">
+                <a class="header__navLink" href="">Chain of Responsibility</a>
+            </div>
+            <div class="header__navItem">
+                <a class="header__navLink" href="">Observe Pattern</a>
+            </div>
+        </div>
+    </div>
+    <div class="banner">
+        <div class="sideBar">
+            <div class="sideBar__header">
+                <h3 class="sideBar__strong">CHAIN OF RESPONSIBILITY GÜÇLÜ YANLARI</h3>
+            </div>
+            <div class="sideBar__body">
+                <div class="sideBar__item"><span class="sideBar__text">İstekleri İşleme Özelleştirme</span>
+                    <div class="sideBar__itemDescription">İsteği işleyecek olan işleyiciyi isteğin tipine göre seçme
+                        olanağı sağlar. Bu sayede, farklı istek türlerini özelleştirilmiş işleyicilere yönlendirebilir
+                        ve her tür isteğin farklı bir şekilde işlenmesini sağlayabilirsiniz.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Kullanım Kolaylığı</span>
+                    <div class="sideBar__itemDescription">İstemci, isteği zincirleme olarak gönderir ve işleyiciler
+                        zinciri otomatik olarak yönlendirir. İstemci, zincirin yapısından ve işleyicilerin sırasından
+                        habersiz olabilir, bu da kullanımı kolaylaştırır.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Tek Sorumluluk İlkesi</span>
+                    <div class="sideBar__itemDescription">Desen, Tek Sorumluluk İlkesi'ne uyar ve her işleyici sadece
+                        belirli bir işlemi gerçekleştirir. Bu, kodun bakımını ve anlaşılmasını iyileştirir.
+                    </div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">İşlemlerin Merkezi Kontrolü</span>
+                    <div class="sideBar__itemDescription">İstek zincirindeki işleyicilerin sırası ve davranışı, merkezi
+                        bir yerde tanımlanabilir. Bu, uygulama davranışını merkezi bir şekilde yönetmeyi kolaylaştırır.
+                    </div>
+                </div>
+            </div>
+            <div class="sideBar__footer">
+                <div class="sideBar__footerInfo">
+                    <h3>Genellikle Kullanıldığı Durumlar</h3>
+                    <i class="fa-sharp fa-solid fa-circle-info"></i>
+                </div>
+                <div class="sideBar__description">
+                    Kullanıcı Arayüzleri: Kullanıcı arayüzünde olaylar (events) zinciri halinde ilerler. Bu desen,
+                    olayların işlenmesini sıralı ve esnek bir şekilde sağlayarak, kullanıcı etkileşimlerini kolayca
+                    işlemenize yardımcı olur.
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content__header">
+                <h3>Chain of Responsibility Nedir ?</h3>
+            </div>
+            <div class="content__transkript">
+                <p>Chain of Responsibility (Sorumluluk Zinciri) tasarım deseni, davranışsal bir tasarım desenidir ve
+                    nesneler arasındaki işlemleri zincirleme bir şekilde yönlendirmeye odaklanır. Bu desen, bir isteği
+                    gönderen nesnenin bu isteği işleyebilecek bir dizi nesne (işleyici) zinciri boyunca geçmesini ve her
+                    bir işleyicinin, isteği işleyip sonlandırıp sonlandıramayacağını belirleyerek bu işlemi işlemesini
+                    sağlar.</p>
+            </div>
+            <form id="registrationForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                <br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <br>
+                <button type="button" onclick="validateForm()">Register</button>
+            </form>
+        </div>
+        <div class="sideBar --rightBar">
+            <div class="sideBar__header">
+                <h3 class="sideBar__weak">CHAIN OF RESPONSIBILITY ZAYIF YANLARI</h3>
+            </div>
+            <div class="sideBar__body">
+                <div class="sideBar__item"><span class="sideBar__text">Performans Etkisi</span>
+                    <div class="sideBar__itemDescription">Zincirdeki her işleyici, isteği işlemek için ekstra bir
+                        maliyet oluşturur. Zincirde çok fazla işleyici varsa ve istekler sık sık zinciri tamamlamadan
+                        sona eriyorsa, bu performans açısından olumsuz bir etkiye neden olabilir.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Sorumluluk Yönetimi</span>
+                    <div class="sideBar__itemDescription">Zincirdeki işleyicilerin sorumluluklarının düzgün bir şekilde
+                        yönetilmesi önemlidir. Bir işleyici yanlış şekilde ayarlanırsa veya zincirdeki doğru bir sıra
+                        yoksa, istekler beklenmedik sonuçlarla karşılaşabilir.</div>
+                </div>
+                <div class="sideBar__item"><span class="sideBar__text">Debugging ve Hata Ayıklama</span>
+                    <div class="sideBar__itemDescription">Zincirdeki her bir işleyici, isteği işleyebileceği gibi
+                        işleyemeyebilir. Bu durumda hata ayıklama süreci, isteğin neden işlenmediğini belirlemek için
+                        daha karmaşık ve zorlu olabilir.
+                    </div>
+                </div>
+            </div>
+            <div class="sideBar__footer">
+                <div class="sideBar__footerInfo">
+                    <h3>Kullanılmaması Gereken Durumlar</h3>
+                    <i class="fa-sharp fa-solid fa-circle-info"></i>
+                </div>
+                <div class="sideBar__description">
+                    İşleyicilerin Tekrarlı Kullanımı: Zincirdeki işleyicilerin çoğunun aynı işlemi yapması gerekiyorsa
+                    veya çok benzer işlevlere sahipse, her bir işleyiciyi ayrı ayrı oluşturmak ve yönetmek yerine başka
+                    bir yöntem veya tasarım deseni daha uygun olabilir.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="register.js"></script>
+</body>
+
+</html>
